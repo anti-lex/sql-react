@@ -2,15 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { View, TextInput, Text, Button, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import * as SQLite from 'expo-sqlite';
 import { Ionicons } from '@expo/vector-icons';
-
+import TakePictureScreen from './components/TakePictureScreen';
 // run: expo install expo-sqlite
 
 export default function App() {
   [dataForDatabase, setDataForDatabase] = useState({});
   [dataFromDatabase, setDataFromDatabase] = useState('');
-
+  const [isAddMode, setIsAddMode] = useState(false);
   const db = SQLite.openDatabase('myTestDB');
-
   useEffect(() => {
       db.transaction(tx => {
         tx.executeSql('CREATE TABLE IF NOT EXISTS ExampleTable (id INTEGER PRIMARY KEY NOT NULL, name TEXT, age INT, favouriteQuote TEXT, favouriteClass TEXT);', 
@@ -41,14 +40,6 @@ export default function App() {
 
   onFavouriteClassChangeHandler = (value) => {
     setDataForDatabase(prevState => ({ ...prevState, favouriteClass: value }));
-  }
-
-  const TakePictureScreen = () => {
-    const [selectedImage, setSelectedImage] = useState();
-
-    const imageSelectedHandler = imagePath => {
-        setSelectedImage(imagePath);
-    }
   }
 
   saveToDatabase = () => {
@@ -104,10 +95,8 @@ export default function App() {
           <Button style={styles.button}  title="Save" onPress={saveToDatabase} />
         </View>
         <View style={styles.button5}>
-          <TouchableOpacity
-            onPress={TakePictureScreen}>
-              <Ionicons name="stop-circle" size={32} color="black" />
-          </TouchableOpacity>
+          <Button title ="Add Contact" color="blue" onPress={ () => setIsAddMode(true)} />
+          <TakePictureScreen visible={isAddMode} onCancel={ () => setIsAddMode(false) }/>
         </View>
         <View>
           <Text style={styles.label}>CONTENTS CURRENTLY IN DB</Text>
