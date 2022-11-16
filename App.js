@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, Text, Button, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, TextInput, Text, Button, StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
 import * as SQLite from 'expo-sqlite';
+import { Overlay} from 'react-overlays';
 import { Ionicons } from '@expo/vector-icons';
 import TakePictureScreen from './components/TakePictureScreen';
 // run: expo install expo-sqlite
@@ -8,7 +9,11 @@ import TakePictureScreen from './components/TakePictureScreen';
 export default function App() {
   [dataForDatabase, setDataForDatabase] = useState({});
   [dataFromDatabase, setDataFromDatabase] = useState('');
-  const [isAddMode, setIsAddMode] = useState(false);
+  const [visible, setVisible] = useState(false);
+
+  const toggleOverlay = () => {
+    setVisible(!visible);
+  };
   const db = SQLite.openDatabase('myTestDB');
   useEffect(() => {
       db.transaction(tx => {
@@ -94,9 +99,20 @@ export default function App() {
                     placeholder="Add your quote/caption here" />
           <Button style={styles.button}  title="Save" onPress={saveToDatabase} />
         </View>
-        <View style={styles.button5}>
-          <Button title ="Add Contact" color="blue" onPress={ () => setIsAddMode(true)} />
-          <TakePictureScreen visible={isAddMode} onCancel={ () => setIsAddMode(false) }/>
+        <View>
+          <Button
+            title="Open Overlay"
+            onPress={toggleOverlay}
+            buttonStyle={styles.button}
+          />
+          <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
+            <Text style={styles.textPrimary}>Hello!</Text>
+            <Text style={styles.textSecondary}>
+              Welcome to React Native Elements
+            </Text>
+            <Button
+            />
+          </Overlay>
         </View>
         <View>
           <Text style={styles.label}>CONTENTS CURRENTLY IN DB</Text>
