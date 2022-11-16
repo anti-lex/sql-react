@@ -9,6 +9,7 @@ import TakePictureScreen from './components/TakePictureScreen';
 export default function App() {
   [dataForDatabase, setDataForDatabase] = useState({});
   [dataFromDatabase, setDataFromDatabase] = useState('');
+
   const [visible, setVisible] = useState(false);
 
   const toggleOverlay = () => {
@@ -97,22 +98,20 @@ export default function App() {
           <TextInput numberOfLines={4} style={styles.textInput}  
                     onChangeText={onFavouriteClassChangeHandler} 
                     placeholder="Add your quote/caption here" />
-          <Button style={styles.button}  title="Save" onPress={saveToDatabase} />
-        </View>
-        <View>
-          <Button
+                    <Button
             title="Open Overlay"
             onPress={toggleOverlay}
             buttonStyle={styles.button}
           />
           <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
-            <Text style={styles.textPrimary}>Hello!</Text>
-            <Text style={styles.textSecondary}>
-              Welcome to React Native Elements
-            </Text>
-            <Button
-            />
+            <View>
+              <Text style={styles.textPrimary}>Hello!</Text>
+              <Text style={styles.textSecondary}>
+                Welcome to React Native Elements
+              </Text>
+            </View>
           </Overlay>
+          <Button style={styles.button}  title="Save" onPress={saveToDatabase} />
         </View>
         <View>
           <Text style={styles.label}>CONTENTS CURRENTLY IN DB</Text>
@@ -165,4 +164,14 @@ const styles = StyleSheet.create({
     paddingLeft: '2%',
     borderColor: '#DEDEDE',
   },  
+  textPrimary: {
+    marginVertical: 20,
+    textAlign: 'center',
+    fontSize: 20,
+  },
+  textSecondary: {
+    marginBottom: 10,
+    textAlign: 'center',
+    fontSize: 17,
+  },
 });
