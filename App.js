@@ -108,7 +108,7 @@ export default function App() {
         <Button title ="Click me!" onPress={()=>setOpen(true)}/>
         <Modal visible = {open}>
             <View>
-              <Button title = "Click to exit" onPress={()=>setOpen(true)}/>
+                <Button title = "Click to exit" onPress={()=>setOpen(false)}/>
                 <TakePictureScreen></TakePictureScreen>
             </View>
         </Modal>
