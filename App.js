@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, Text, Button, StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
+import { View, TextInput, Text, Button, StyleSheet, ScrollView, TouchableOpacity, Modal} from 'react-native';
 import * as SQLite from 'expo-sqlite';
 import { Ionicons } from '@expo/vector-icons';
 import TakePictureScreen from './components/TakePictureScreen';
@@ -10,6 +10,9 @@ export default function App() {
   [dataFromDatabase, setDataFromDatabase] = useState('');
 
   const [isAddMode, setIsAddMode] = useState(false);
+
+  const [open, setOpen] = useState(false)
+  const [name, setName ] = useState()
 
   const db = SQLite.openDatabase('myTestDB');
   useEffect(() => {
@@ -94,14 +97,21 @@ export default function App() {
           <TextInput numberOfLines={4} style={styles.textInput}  
                     onChangeText={onFavouriteClassChangeHandler} 
                     placeholder="Add your quote/caption here" />
-        <View style={styles.button5}>
+        {/* <View style={styles.button5}>
           <TouchableOpacity
             onPress={TakePictureScreen}>
               <Ionicons name="stop-circle" size={32} color="black" />
           </TouchableOpacity>
           <Button title ="Add Contact" color="blue" onPress={ () => setIsAddMode(true)} />
           <TakePictureScreen visible={isAddMode} onCancel={ () => setIsAddMode(false) }/>
-        </View>
+        </View> */}
+        <Button title ="Click me!" onPress={()=>setOpen(true)}/>
+        <Modal visible = {open}>
+            <View>
+              <Button title = "Click to exit" onPress={()=>setOpen(true)}/>
+                <TakePictureScreen></TakePictureScreen>
+            </View>
+        </Modal>
         <View>
           <Text style={styles.label}>CONTENTS CURRENTLY IN DB</Text>
           <Text style={styles.dbOutput}>{dataFromDatabase}</Text>
