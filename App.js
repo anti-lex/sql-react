@@ -12,6 +12,9 @@ export default function App() {
 
   const [isAddMode, setIsAddMode] = useState(false);
 
+  const [messageForFile, setMessageForFile] = useState('');
+  const [messageFromFile, setMessageFromFile] = useState('-- FILE HAS NOT BEEN READ YET! --');
+
   const [open, setOpen] = useState(false)
   const [name, setName ] = useState()
   const imgsrc = "./components/placeholder.png"
