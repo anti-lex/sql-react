@@ -48,8 +48,9 @@ export default function App() {
     setDataForDatabase(prevState => ({ ...prevState, favouriteClass: value }));
   }
 
-  readFromFile = () => {
+  const readFromFile = () => {
     const filePath = FileSystem.documentDirectory + 'MyNewTextFile.txt';
+    console.log("File read!");
     FileSystem.readAsStringAsync(filePath, {})
       .then((imgsrc = FileSystem.documentDirectory + 'MyNewTextFile.txt') => {
         imgsrc = FileSystem.documentDirectory + 'MyNewTextFile.txt';
@@ -124,6 +125,7 @@ export default function App() {
             <View>
                 <Button title = "Click to exit" onPress={()=>setOpen(false)}/>
                 <TakePictureScreen></TakePictureScreen>
+                <Button title = "click to upload!" onPress={()=>readFromFile()}/>
             </View>
         </Modal>
         <View>
