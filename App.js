@@ -3,6 +3,7 @@ import { View, TextInput, Text, Button, StyleSheet, ScrollView, TouchableOpacity
 import * as SQLite from 'expo-sqlite';
 import { Ionicons } from '@expo/vector-icons';
 import TakePictureScreen from './components/TakePictureScreen';
+import * as FileSystem from 'expo-file-system';
 // run: expo install expo-sqlite
 
 export default function App() {
@@ -13,7 +14,7 @@ export default function App() {
 
   const [open, setOpen] = useState(false)
   const [name, setName ] = useState()
-
+  const imgsrc = "placeholder.png"
   const db = SQLite.openDatabase('myTestDB');
   useEffect(() => {
       db.transaction(tx => {
@@ -92,6 +93,7 @@ export default function App() {
     <ScrollView>
       <View style={styles.form}>
         <View>
+          <Image source={{}}
           <Text style={styles.header}>My Favourite Moment!</Text>
           <Text style={styles.header}>a_valsamos</Text>
           <TextInput numberOfLines={4} style={styles.textInput}  
