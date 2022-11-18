@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, Text, Button, StyleSheet, ScrollView, TouchableOpacity, Modal} from 'react-native';
+import { View, TextInput, Text, Button, StyleSheet, ScrollView, TouchableOpacity, Modal, Image} from 'react-native';
 import * as SQLite from 'expo-sqlite';
 import { Ionicons } from '@expo/vector-icons';
 import TakePictureScreen from './components/TakePictureScreen';
@@ -14,7 +14,7 @@ export default function App() {
 
   const [open, setOpen] = useState(false)
   const [name, setName ] = useState()
-  const imgsrc = "placeholder.png"
+  const imgsrc = "./components/placeholder.png"
   const db = SQLite.openDatabase('myTestDB');
   useEffect(() => {
       db.transaction(tx => {
@@ -47,6 +47,18 @@ export default function App() {
   onFavouriteClassChangeHandler = (value) => {
     setDataForDatabase(prevState => ({ ...prevState, favouriteClass: value }));
   }
+
+  readFromFile = () => {
+    const filePath = FileSystem.documentDirectory + 'MyNewTextFile.txt';
+    FileSystem.readAsStringAsync(filePath, {})
+      .then((imgsrc = FileSystem.documentDirectory + 'MyNewTextFile.txt') => {
+        imgsrc = FileSystem.documentDirectory + 'MyNewTextFile.txt';
+      })
+      .catch((error) => {
+        console.log('An error occurred: ');
+        console.log(error);
+      }); 
+  };
 
   saveToDatabase = () => {
       // transaction(callback, error, success)
@@ -93,7 +105,7 @@ export default function App() {
     <ScrollView>
       <View style={styles.form}>
         <View>
-          <Image source={{}}
+          <Image source={require(imgsrc)}/>
           <Text style={styles.header}>My Favourite Moment!</Text>
           <Text style={styles.header}>a_valsamos</Text>
           <TextInput numberOfLines={4} style={styles.textInput}  
