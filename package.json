@@ -17,7 +17,8 @@
     "react-native": "0.70.5",
     "react-native-elements": "^3.4.2",
     "react-native-web": "~0.18.7",
-    "react-overlays": "^5.2.1"
+    "react-overlays": "^5.2.1",
+    "expo-file-system": "~15.1.1"
   },
   "devDependencies": {
     "babel-preset-expo": "~9.2.1"
