@@ -50,10 +50,10 @@ export default function App() {
 
   const readFromFile = () => {
     const filePath = FileSystem.documentDirectory + 'MyNewTextFile.txt';
-    console.log("File read!");
     FileSystem.readAsStringAsync(filePath, {})
-      .then((imgsrc = FileSystem.documentDirectory + 'MyNewTextFile.txt') => {
-        imgsrc = FileSystem.documentDirectory + 'MyNewTextFile.txt';
+      .then((result) => {
+        setMessageFromFile(result);
+        console.log("File read!");
       })
       .catch((error) => {
         console.log('An error occurred: ');
