@@ -17,7 +17,7 @@ export default function App() {
 
   const [open, setOpen] = useState(false)
   const [name, setName ] = useState()
-  const imgsrc = "./components/placeholder.png"
+  var imgsrc = "./components/placeholder.png"
   const db = SQLite.openDatabase('myTestDB');
   useEffect(() => {
       db.transaction(tx => {
@@ -93,7 +93,7 @@ export default function App() {
             let entries = rows._array;
             console.log(entries);
             entries.forEach((entry) => {
-              setDataFromDatabase(prev => prev + `${entry.id}, ${entry.name}, ${entry.age}, ${entry.favouriteQuote}, ${entry.favouriteClass}\n`);
+              setDataFromDatabase(prev => prev + `${entry.id}, ${entry.name}, ${entry.imageLocation}\n`);
             });
           },
           (_, result) => {
