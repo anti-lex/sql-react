@@ -21,7 +21,7 @@ export default function App() {
   const db = SQLite.openDatabase('myTestDB');
   useEffect(() => {
       db.transaction(tx => {
-        tx.executeSql('CREATE TABLE IF NOT EXISTS ExampleTable (id INTEGER PRIMARY KEY NOT NULL, name TEXT, age INT, favouriteQuote TEXT, favouriteClass TEXT);', 
+        tx.executeSql('CREATE TABLE IF NOT EXISTS ExampleTable2 (id INTEGER PRIMARY KEY NOT NULL, name TEXT, imageLocation TEXT);', 
           [], 
           () => console.log('TABLE CREATED!'),
           (_, result) => console.log('TABLE CREATE failed:' + result)
@@ -69,8 +69,8 @@ export default function App() {
       db.transaction(
         tx => {
           // executeSql(sqlStatement, arguments, success, error)
-          tx.executeSql("INSERT INTO ExampleTable (name, age, favouriteQuote, favouriteClass) values (?, ?, ?, ?)", 
-            [dataForDatabase.name, dataForDatabase.age, dataForDatabase.favouriteQuote, dataForDatabase.favouriteClass],
+          tx.executeSql("INSERT INTO ExampleTable2 (name,  imageLocation) values (?, ?)", 
+            [dataForDatabase.name, FileSystem.documentDirectory + 'MyNewTextFile.txt'],
             (_, { rowsAffected }) => rowsAffected > 0 ? console.log('ROW INSERTED!') : console.log('INSERT FAILED!'),
             (_, result) => console.log('INSERT failed:' + result)
           );
@@ -82,7 +82,7 @@ export default function App() {
   retrieveFromDatabase = () => {
     db.transaction(
       tx => {
-        tx.executeSql("SELECT * FROM ExampleTable", 
+        tx.executeSql("SELECT * FROM ExampleTable2", 
           [], 
           (_, { rows }) => {    
             console.log("ROWS RETRIEVED!");
@@ -91,7 +91,7 @@ export default function App() {
             setDataFromDatabase('');
 
             let entries = rows._array;
-            
+            console.log(entries);
             entries.forEach((entry) => {
               setDataFromDatabase(prev => prev + `${entry.id}, ${entry.name}, ${entry.age}, ${entry.favouriteQuote}, ${entry.favouriteClass}\n`);
             });
@@ -128,7 +128,7 @@ export default function App() {
             <View>
                 <Button title = "Click to exit" onPress={()=>setOpen(false)}/>
                 <TakePictureScreen></TakePictureScreen>
-                <Button title = "click to upload!" onPress={()=>readFromFile()}/>
+                <Button title = "click to upload!" onPress={()=>saveToDatabase()}/>
             </View>
         </Modal>
         <View>
