@@ -109,20 +109,14 @@ export default function App() {
     <ScrollView>
       <View style={styles.form}>
         <View>
-          <Image source={require(imgsrc)}/>
+          <TouchableOpacity onPress={()=>setOpen(true)}>
+            <Image source={require(imgsrc)}/>
+          </TouchableOpacity>
           <Text style={styles.header}>My Favourite Moment!</Text>
           <Text style={styles.header}>a_valsamos</Text>
           <TextInput numberOfLines={4} style={styles.textInput}  
                     onChangeText={onFavouriteClassChangeHandler} 
                     placeholder="Add your quote/caption here" />
-        {/* <View style={styles.button5}>
-          <TouchableOpacity
-            onPress={TakePictureScreen}>
-              <Ionicons name="stop-circle" size={32} color="black" />
-          </TouchableOpacity>
-          <Button title ="Add Contact" color="blue" onPress={ () => setIsAddMode(true)} />
-          <TakePictureScreen visible={isAddMode} onCancel={ () => setIsAddMode(false) }/>
-        </View> */}
         <Button title ="Click me!" onPress={()=>setOpen(true)}/>
         <Modal visible = {open}>
             <View>
@@ -131,10 +125,6 @@ export default function App() {
                 <Button title = "click to upload!" onPress={()=>saveToDatabase()}/>
             </View>
         </Modal>
-        <View>
-          <Text style={styles.label}>CONTENTS CURRENTLY IN DB</Text>
-          <Text style={styles.dbOutput}>{dataFromDatabase}</Text>
-        </View>
       </View>
       </View>
     </ScrollView>
