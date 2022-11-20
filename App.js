@@ -39,17 +39,6 @@ export default function App() {
     setDataForDatabase(prevState => ({ ...prevState, name: value }));
   }
 
-  onAgeChangeHandler = (value) => {
-    setDataForDatabase(prevState => ({ ...prevState, age: value }));
-  }
-
-  onFavouriteQuoteChangeHandler = (value) => {
-    setDataForDatabase(prevState => ({ ...prevState, favouriteQuote: value }));
-  }
-
-  onFavouriteClassChangeHandler = (value) => {
-    setDataForDatabase(prevState => ({ ...prevState, favouriteClass: value }));
-  }
 
   const readFromFile = () => {
     const filePath = FileSystem.documentDirectory + 'MyNewTextFile.txt';
@@ -109,15 +98,16 @@ export default function App() {
     <ScrollView>
       <View style={styles.form}>
         <View>
-          <TouchableOpacity onPress={()=>setOpen(true)}>
+          <TouchableOpacity style = {styles.images} onPress={()=>setOpen(true)}>
             <Image source={require(imgsrc)}/>
           </TouchableOpacity>
+          
           <Text style={styles.header}>My Favourite Moment!</Text>
           <Text style={styles.header}>a_valsamos</Text>
           <TextInput numberOfLines={4} style={styles.textInput}  
-                    onChangeText={onFavouriteClassChangeHandler} 
+                    onChangeText={onNameChangeHandler} 
                     placeholder="Add your quote/caption here" />
-        <Button title ="Click me!" onPress={()=>setOpen(true)}/>
+        <Button title ="Save" onPress={()=>saveToDatabase()}/>
         <Modal visible = {open}>
             <View>
                 <Button title = "Click to exit" onPress={()=>setOpen(false)}/>
@@ -182,5 +172,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textAlign: 'center',
     fontSize: 17,
+  },
+  images: {
+    alignContent: 'center',
+    marginLeft: '18%'
   },
 });
