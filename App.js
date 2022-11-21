@@ -14,7 +14,7 @@ export default function App() {
 
   const [messageForFile, setMessageForFile] = useState('');
   const [messageFromFile, setMessageFromFile] = useState('-- FILE HAS NOT BEEN READ YET! --');
-
+  var saved; 
   const [open, setOpen] = useState(false)
   const [name, setName ] = useState()
   var imgsrc = "./components/placeholder.png"
@@ -65,6 +65,8 @@ export default function App() {
           );
         }    
       );
+      saved = true;
+      console.log(saved);
       retrieveFromDatabase();
   }
 
@@ -107,13 +109,15 @@ export default function App() {
           <TextInput numberOfLines={4} style={styles.textInput}  
                     onChangeText={onNameChangeHandler} 
                     placeholder="Add your quote/caption here" />
-        <Button title ="Save" onPress={()=>saveToDatabase()}/>
+        { saved != true &&
+          <Button title ="Save" onPress={()=>saveToDatabase()}/>
+        }
         <Modal visible = {open}>
             <View>
                 <Button title = "Click to exit" onPress={()=>setOpen(false)}/>
                 <TakePictureScreen></TakePictureScreen>
-                <Button title = "click to upload!" onPress={()=>saveToDatabase()}/>
-            </View>
+                  <Button title = "click to upload!" onPress={()=>saveToDatabase()}/>
+              </View>
         </Modal>
       </View>
       </View>
