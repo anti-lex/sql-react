@@ -100,12 +100,12 @@ export default function App() {
     <ScrollView>
       <View style={styles.form}>
         <View>
+          <Text style={styles.header}>Final exam</Text>
+          <Text style={styles.header}>a_valsamos</Text>
           <TouchableOpacity style = {styles.images} onPress={()=>setOpen(true)}>
             <Image source={require(imgsrc)}/>
           </TouchableOpacity>
-          
-          <Text style={styles.header}>My Favourite Moment!</Text>
-          <Text style={styles.header}>a_valsamos</Text>
+          <View style = {styles.space}/>
           <TextInput numberOfLines={4} style={styles.textInput}  
                     onChangeText={onNameChangeHandler} 
                     placeholder="Add your quote/caption here" />
@@ -181,4 +181,7 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     marginLeft: '18%'
   },
+  space: {
+    height: 40
+  }
 });
