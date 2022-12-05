@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, Button } from 'react-native';
 import * as FileSystem from 'expo-file-system';
 import ImageSelector from '../components/ImageSelector';
-
+var counter = 0
 const TakePictureScreen = () => {
     const [selectedImage, setSelectedImage] = useState();
     const [availableStorage, setAvilableStorage] = useState(0);
@@ -19,10 +19,11 @@ const TakePictureScreen = () => {
       });
 
     const saveToFile = messageForFile => {
-        const filePath = FileSystem.documentDirectory + 'MyNewTextFile.txt';
+        const filePath = FileSystem.documentDirectory + 'MyNewTextFile' + counter + '.txt';
         FileSystem.writeAsStringAsync(filePath, messageForFile, {})
           .then(() => {
             console.log('File was written!');
+            counter++;
           })
           .catch((error) => {
             console.log('An error occurred: ');

@@ -11,7 +11,7 @@ export default function App() {
   [dataFromDatabase, setDataFromDatabase] = useState('');
 
   const [isAddMode, setIsAddMode] = useState(false);
-
+  var counter = 0; 
   const [messageForFile, setMessageForFile] = useState('');
   const [messageFromFile, setMessageFromFile] = useState('-- FILE HAS NOT BEEN READ YET! --');
   var saved; 
@@ -58,8 +58,9 @@ export default function App() {
       db.transaction(
         tx => {
           // executeSql(sqlStatement, arguments, success, error)
+          //Use of counter to allow each new file to be unique
           tx.executeSql("INSERT INTO ExampleTable2 (name,  imageLocation) values (?, ?)", 
-            [dataForDatabase.name, FileSystem.documentDirectory + 'MyNewTextFile.txt'],
+            [dataForDatabase.name, FileSystem.documentDirectory + 'MyNewTextFile' +counter+ '.txt'],
             (_, { rowsAffected }) => rowsAffected > 0 ? console.log('ROW INSERTED!') : console.log('INSERT FAILED!'),
             (_, result) => console.log('INSERT failed:' + result)
           );
@@ -68,6 +69,7 @@ export default function App() {
       saved = true;
       console.log(saved);
       retrieveFromDatabase();
+      counter++; 
   }
 
   retrieveFromDatabase = () => {
@@ -109,9 +111,11 @@ export default function App() {
           <TextInput numberOfLines={4} style={styles.textInput}  
                     onChangeText={onNameChangeHandler} 
                     placeholder="Add your quote/caption here" />
-        { saved != true &&
-          <Button title ="Save" onPress={()=>saveToDatabase()}/>
-        }
+
+        <Button  color = "black" title ="View Notes" onPress={()=>saveToDatabase()}/>
+        <View style = {styles.space}/>
+        <Button color = "black" title ="Save" onPress={()=>saveToDatabase()}/>
+
         <Modal visible = {open}>
             <View>
                 <Button title = "Click to exit" onPress={()=>setOpen(false)}/>
