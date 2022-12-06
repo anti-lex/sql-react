@@ -19,7 +19,8 @@ export default function App() {
   const [name, setName ] = useState()
   var imgsrc = "./components/placeholder.png"
   const db = SQLite.openDatabase('myTestDB');
-  var array
+  var arrayUri = [];
+  var arrayNote = new Array();
   useEffect(() => {
       db.transaction(tx => {
         tx.executeSql('CREATE TABLE IF NOT EXISTS ExampleTable2 (id INTEGER PRIMARY KEY NOT NULL, name TEXT, imageLocation TEXT);', 
@@ -60,6 +61,9 @@ export default function App() {
         tx => {
           // executeSql(sqlStatement, arguments, success, error)
           //Use of counter to allow each new file to be unique
+          console.log("hi")
+          arrayNote.push(dataForDatabase.name);
+          arrayUri.push(FileSystem.documentDirectory  + 'MyNewTextFile' +counter+ '.txt')
           tx.executeSql("INSERT INTO ExampleTable2 (name,  imageLocation) values (?, ?)", 
             [dataForDatabase.name, FileSystem.documentDirectory + 'MyNewTextFile' +counter+ '.txt'],
             (_, { rowsAffected }) => rowsAffected > 0 ? console.log('ROW INSERTED!') : console.log('INSERT FAILED!'),
@@ -70,20 +74,17 @@ export default function App() {
       saved = true;
       console.log(saved);
       retrieveFromDatabase();
-      counter++; 
+      counter++;
+      console.log(arrayNote[0]) 
   }
 
   const showSaved = () => {
+    console.log(dataForDatabase.name)
     Alert.alert(
-      "Alert Title",
-      "My Alert Msg",
+      "DB data",
+      "Image:  " + FileSystem.documentDirectory  + 'MyNewTextFile' +counter+ '.txt' + "\n" + 'Notes: ' + dataForDatabase.name,
       [
-        {
-          text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel"
-        },
-        { text: "OK", onPress: () => console.log("OK Pressed") }
+        { text: "Okay", onPress: () => console.log("OK Pressed") }
       ]
     );
   }
