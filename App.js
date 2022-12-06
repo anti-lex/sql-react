@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, Text, Button, StyleSheet, ScrollView, TouchableOpacity, Modal, Image} from 'react-native';
+import { View, TextInput, Text, Button, StyleSheet, ScrollView, TouchableOpacity, Modal, Image, Alert} from 'react-native';
 import * as SQLite from 'expo-sqlite';
 import { Ionicons } from '@expo/vector-icons';
 import TakePictureScreen from './components/TakePictureScreen';
@@ -19,6 +19,7 @@ export default function App() {
   const [name, setName ] = useState()
   var imgsrc = "./components/placeholder.png"
   const db = SQLite.openDatabase('myTestDB');
+  var array
   useEffect(() => {
       db.transaction(tx => {
         tx.executeSql('CREATE TABLE IF NOT EXISTS ExampleTable2 (id INTEGER PRIMARY KEY NOT NULL, name TEXT, imageLocation TEXT);', 
@@ -72,6 +73,21 @@ export default function App() {
       counter++; 
   }
 
+  const showSaved = () => {
+    Alert.alert(
+      "Alert Title",
+      "My Alert Msg",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "OK", onPress: () => console.log("OK Pressed") }
+      ]
+    );
+  }
+
   retrieveFromDatabase = () => {
     db.transaction(
       tx => {
@@ -112,7 +128,7 @@ export default function App() {
                     onChangeText={onNameChangeHandler} 
                     placeholder="Add your quote/caption here" />
 
-        <Button  color = "black" title ="View Notes" onPress={()=>saveToDatabase()}/>
+        <Button  color = "black" title ="View Notes" onPress={()=>showSaved()}/>
         <View style = {styles.space}/>
         <Button color = "black" title ="Save" onPress={()=>saveToDatabase()}/>
 
